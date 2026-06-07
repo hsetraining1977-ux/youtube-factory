@@ -1,0 +1,61 @@
+# Kids Education Topics — Stories + Learning
+
+categories:
+
+  bedtime_stories:
+    - "The Little Robot Who Learned to Share"
+    - "Zara and the Magic Rainbow Garden"
+    - "The Dragon Who Was Afraid of Fire"
+    - "Captain Cosmo and the Space Vegetables"
+    - "The Tiny Elephant's Big Adventure"
+    - "Bella the Brave Butterfly"
+    - "The Town Where Everyone Was Different"
+    - "Max the Dog Who Could Read"
+    - "The Princess Who Fixed the Kingdom's Plumbing"
+    - "The Boy Who Named the Stars"
+    - "Oliver and the Talking Ocean"
+    - "The Bear Who Discovered Music"
+
+  learning_science:
+    - "Why is the Sky Blue? (Ages 4-8)"
+    - "How Do Volcanoes Work? (A Fun Explanation)"
+    - "What Are Clouds Made Of?"
+    - "Why Do Leaves Change Color in Fall?"
+    - "How Do Butterflies Grow? The Amazing Life Cycle"
+    - "Why Do We Have Day and Night?"
+    - "What Makes a Rainbow? Light and Colors"
+    - "How Do Fish Breathe Underwater?"
+    - "Why Do We Need to Sleep?"
+    - "How Does Food Become Energy?"
+
+  learning_math:
+    - "Counting to 100 with Space Adventures"
+    - "Adding and Subtracting with Dinosaurs"
+    - "Shapes Are Everywhere! (Circles, Squares, Triangles)"
+    - "What Are Fractions? Pizza Math!"
+    - "Telling Time with Sam the Clock"
+    - "Multiplication Tables Adventure Story"
+
+  learning_history:
+    - "The Amazing Pyramids — How Did They Build Them?"
+    - "Knights and Castles in the Middle Ages"
+    - "Ancient Greece — Where the Olympics Started"
+    - "The First People to Fly — The Wright Brothers"
+    - "How the Internet Was Invented"
+    - "The First Moon Landing — July 1969"
+
+  animals_nature:
+    - "The Secret Life of Ants — The World's Best Team"
+    - "How Do Whales Communicate?"
+    - "Why Are Pandas Black and White?"
+    - "The Fastest Animals on Earth"
+    - "Underwater Wonders — Coral Reefs"
+    - "Migration — Why Do Birds Fly South?"
+
+  values_social:
+    - "Why Kindness Is a Superpower"
+    - "How to Make a Good Friend"
+    - "Why We Should Not Waste Food"
+    - "Being Brave When You're Scared"
+    - "Why Everyone Is Special (Diversity Story)"
+    - "The Importance of Saying Sorry"

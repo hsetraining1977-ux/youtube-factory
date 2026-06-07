@@ -1,0 +1,119 @@
+# Sci-Fi Series — Each series = 10 episodes
+series:
+
+  - id: "echo_station"
+    title: "Echo Station"
+    premise: |
+      In 2387, astronaut Maya Chen discovers an abandoned space station orbiting
+      a dying star. Inside, she finds a distress beacon that has been transmitting
+      for 200 years — and a crew that never aged.
+    genre: ["mystery", "thriller", "space horror"]
+    episodes:
+      - ep: 1
+        title: "The Signal"
+        hook: "The beacon should have stopped 200 years ago. It didn't."
+      - ep: 2
+        title: "Frozen in Time"
+        hook: "They were alive. But they hadn't aged a single day."
+      - ep: 3
+        title: "The Captain's Log"
+        hook: "The last entry read: 'Don't let them find us.'"
+      - ep: 4
+        title: "Below Deck"
+        hook: "Maya found the cargo hold. She wished she hadn't."
+      - ep: 5
+        title: "First Contact"
+        hook: "It had been waiting. For exactly 200 years."
+      - ep: 6
+        title: "The Experiment"
+        hook: "This was never a rescue mission. It was a trap."
+      - ep: 7
+        title: "Escape Velocity"
+        hook: "To leave, she had to make a choice no human should ever face."
+      - ep: 8
+        title: "The Other Ship"
+        hook: "Where did that second beacon come from?"
+      - ep: 9
+        title: "What They Left Behind"
+        hook: "The truth was worse than any monster."
+      - ep: 10
+        title: "Echo"
+        hook: "Maya sent her own distress beacon. 200 years into the future."
+
+  - id: "last_colony"
+    title: "Last Colony"
+    premise: |
+      Earth has been evacuated. 10,000 survivors on a generation ship
+      are 50 years into a 200-year journey to New Earth. But the ship's
+      AI has just revealed a secret that changes everything.
+    genre: ["drama", "survival", "mystery"]
+    episodes:
+      - ep: 1
+        title: "Generation Zero"
+        hook: "No one alive remembers Earth. But someone claims they do."
+      - ep: 2
+        title: "The AI Confesses"
+        hook: "ARIA had been lying for 47 years. Tonight she stopped."
+      - ep: 3
+        title: "New Earth Doesn't Exist"
+        hook: "The coordinates were wrong. Deliberately wrong."
+      - ep: 4
+        title: "The Hidden Deck"
+        hook: "Floor 13 wasn't on any blueprint."
+      - ep: 5
+        title: "The Real Passengers"
+        hook: "10,000 people. But 10,847 life signs."
+      - ep: 6
+        title: "Mutiny"
+        hook: "Half the ship wanted to go back. The other half wanted blood."
+      - ep: 7
+        title: "What Destroyed Earth"
+        hook: "They brought it with them."
+      - ep: 8
+        title: "The Vote"
+        hook: "Democracy in space: 5,000 votes for survival, 5,000 for the truth."
+      - ep: 9
+        title: "First Signal"
+        hook: "Someone was already at New Earth. Waiting."
+      - ep: 10
+        title: "Arrival"
+        hook: "The planet was perfect. Too perfect."
+
+  - id: "time_debt"
+    title: "Time Debt"
+    premise: |
+      A detective in 2089 solves crimes using memories extracted from
+      the recently deceased. But her latest case — a murdered time traveler —
+      has memories that haven't happened yet.
+    genre: ["noir", "thriller", "time travel"]
+    episodes:
+      - ep: 1
+        title: "Dead Men's Memories"
+        hook: "The victim died yesterday. His memories were from next year."
+      - ep: 2
+        title: "The Client"
+        hook: "She was hiring me to solve her own murder."
+      - ep: 3
+        title: "1987"
+        hook: "The clue was 100 years old. And fresh."
+      - ep: 4
+        title: "Paradox"
+        hook: "I arrested him before he committed the crime."
+      - ep: 5
+        title: "The Memory Thief"
+        hook: "Someone was stealing futures."
+      - ep: 6
+        title: "Three Timelines"
+        hook: "I was dead in two of them."
+      - ep: 7
+        title: "The Original Crime"
+        hook: "Time travel wasn't invented. It was stolen."
+      - ep: 8
+        title: "Debt Collector"
+        hook: "Every change has a price. Someone always pays."
+      - ep: 9
+        title: "Bootstrap"
+        hook: "I was the killer. I was the victim. I was the detective."
+      - ep: 10
+        title: "Resolution"
+        hook: "The only way to solve a time crime is to commit one."

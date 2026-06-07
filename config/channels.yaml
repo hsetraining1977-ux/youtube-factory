@@ -1,0 +1,206 @@
+# ═══════════════════════════════════════════════════════════
+# Multi-Channel YouTube Factory — Channel Configurations
+# ═══════════════════════════════════════════════════════════
+
+channels:
+
+  # ─── 1. SCI-FI STORIES (Episodic) ─────────────────────────
+  scifi_stories:
+    enabled: true
+    name: "Cosmic Chronicles"
+    niche: "episodic_scifi"
+    language: "en"
+
+    branding:
+      primary_color: "#0a0e1a"      # Deep space black
+      accent_color: "#00d4ff"       # Neon cyan
+      text_color: "#ffffff"
+      font_style: "futuristic"
+      channel_watermark: "COSMIC CHRONICLES"
+
+    voice:
+      provider: "elevenlabs"
+      voice_id: "VR6AewLTigWG4xSOukaG"   # Arnold - deep dramatic
+      stability: 0.80
+      style: 0.50
+      model: "eleven_turbo_v2_5"
+
+    content:
+      format: "episodic"             # episodes linked in series
+      episodes_per_series: 10
+      long_form_duration: [600, 1200]   # 10-20 min
+      shorts_duration: 58               # seconds
+      upload_schedule:
+        days: ["Tuesday", "Thursday", "Saturday"]
+        time: "20:00"
+      topics_file: "channels/scifi_stories/series_list.yaml"
+
+    seo:
+      category_id: "24"              # Entertainment
+      default_tags:
+        - "sci-fi story"
+        - "science fiction"
+        - "space story"
+        - "sci-fi series"
+        - "audio drama"
+        - "space exploration"
+        - "future story"
+        - "scifi podcast"
+
+    publishing:
+      youtube_channel_id: ""         # Fill in after creating channel
+      tiktok: true
+      instagram_reels: true
+      facebook_reels: false
+
+  # ─── 2. KIDS EDUCATION ─────────────────────────────────────
+  kids_education:
+    enabled: true
+    name: "Wonder World Kids"
+    niche: "kids_edu"
+    language: "en"
+
+    branding:
+      primary_color: "#ff6b35"      # Bright orange
+      accent_color: "#ffdd00"       # Yellow
+      text_color: "#ffffff"
+      font_style: "rounded_bold"
+      channel_watermark: "WONDER WORLD"
+
+    voice:
+      provider: "elevenlabs"
+      voice_id: "AZnzlk1XvdvUeBnXmlld"   # Domi - warm female
+      stability: 0.85
+      style: 0.60
+      model: "eleven_turbo_v2_5"
+
+    content:
+      format: "standalone"
+      long_form_duration: [300, 600]   # 5-10 min (kids attention span)
+      shorts_duration: 45              # seconds
+      upload_schedule:
+        days: ["Monday", "Wednesday", "Friday", "Sunday"]
+        time: "09:00"                  # Morning for kids
+      topics_file: "channels/kids_education/topics.yaml"
+
+    seo:
+      category_id: "27"             # Education
+      made_for_kids: true
+      default_tags:
+        - "kids stories"
+        - "children education"
+        - "bedtime stories"
+        - "learn for kids"
+        - "animated stories"
+        - "educational videos"
+        - "kids learning"
+        - "preschool"
+
+    publishing:
+      youtube_channel_id: ""
+      tiktok: false                  # Age restrictions
+      instagram_reels: false
+      facebook_reels: false
+
+  # ─── 3. MYSTERY HISTORY ────────────────────────────────────
+  mystery_history:
+    enabled: true
+    name: "Mysteries of History"
+    niche: "mystery_history"
+    language: "en"
+
+    branding:
+      primary_color: "#1a0a2e"      # Deep purple
+      accent_color: "#c9a84c"       # Gold
+      text_color: "#ffffff"
+      font_style: "serif_bold"
+      channel_watermark: "MYSTERIES OF HISTORY"
+
+    voice:
+      provider: "elevenlabs"
+      voice_id: "pNInz6obpgDQGcFmaJgB"   # Adam - authoritative
+      stability: 0.75
+      style: 0.40
+      model: "eleven_turbo_v2_5"
+
+    content:
+      format: "standalone"
+      long_form_duration: [480, 900]   # 8-15 min
+      shorts_duration: 58
+      upload_schedule:
+        days: ["Monday", "Wednesday", "Friday", "Saturday", "Sunday"]
+        time: "18:00"
+      topics_file: "channels/mystery_history/topics.yaml"
+
+    seo:
+      category_id: "27"
+      default_tags:
+        - "mysterious history"
+        - "ancient mysteries"
+        - "historical secrets"
+        - "unsolved mysteries"
+        - "history documentary"
+
+    publishing:
+      youtube_channel_id: ""
+      tiktok: true
+      instagram_reels: true
+      facebook_reels: true
+
+  # ─── 4. DIY TUTORIALS ──────────────────────────────────────
+  diy_tutorials:
+    enabled: true
+    name: "Fix It Fast"
+    niche: "diy_home"
+    language: "en"
+
+    branding:
+      primary_color: "#1e3a2f"      # Deep green
+      accent_color: "#f5a623"       # Orange/amber
+      text_color: "#ffffff"
+      font_style: "bold_industrial"
+      channel_watermark: "FIX IT FAST"
+
+    voice:
+      provider: "elevenlabs"
+      voice_id: "ErXwobaYiN019PkySvjV"   # Antoni - clear instructional
+      stability: 0.90
+      style: 0.20
+      model: "eleven_turbo_v2_5"
+
+    content:
+      format: "tutorial"
+      long_form_duration: [480, 1200]  # 8-20 min (tutorials need time)
+      shorts_duration: 58
+      upload_schedule:
+        days: ["Tuesday", "Thursday", "Saturday"]
+        time: "10:00"               # Weekend morning (home projects)
+      topics_file: "channels/diy_tutorials/topics.yaml"
+
+    seo:
+      category_id: "26"             # Howto & Style
+      default_tags:
+        - "diy home repair"
+        - "how to fix"
+        - "home improvement"
+        - "plumbing tutorial"
+        - "gardening tips"
+        - "handyman"
+        - "home maintenance"
+        - "diy tutorial"
+
+    publishing:
+      youtube_channel_id: ""
+      tiktok: true
+      instagram_reels: true
+      facebook_reels: true
+
+# ─── GLOBAL SETTINGS ─────────────────────────────────────────
+global:
+  claude_model: "claude-haiku-4-5"
+  dalle_model: "dall-e-3"
+  video_resolution: [1920, 1080]
+  shorts_resolution: [1080, 1920]   # Vertical for Shorts/TikTok
+  fps: 30
+  output_dir: "./output"
+  max_concurrent_productions: 2

@@ -1,0 +1,37 @@
+# ════════════════════════════════════════════
+# CRITICAL: Never commit secrets or large files
+# ════════════════════════════════════════════
+
+# Secrets & credentials
+.env
+client_secrets.json
+*.pickle
+youtube_token*.pickle
+*_token.json
+
+# Output (videos, audio, generated content)
+output/
+*.mp4
+*.mp3
+*.wav
+*.jpg
+*.jpeg
+*.png
+
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+.Python
+*.egg-info/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temp files
+temp_*.m4a
+*.tmp
+concat_list.txt
