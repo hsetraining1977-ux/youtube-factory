@@ -226,8 +226,6 @@ def generate_script(niche: str, topic: str, episode_context: dict | None = None)
     response = client.messages.create(
         model="claude-haiku-4-5",
         max_tokens=4000,
-        thinking={"type": "disabled"},
-        output_config={"effort": "low"},
         system=template["system"],
         messages=[{"role": "user", "content": user_content}]
     )
