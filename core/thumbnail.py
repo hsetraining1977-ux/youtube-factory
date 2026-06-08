@@ -5,6 +5,7 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 from io import BytesIO
 import numpy as np
+from core.fonts import get_font
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
@@ -43,11 +44,8 @@ def add_text_overlay(img_path: str, title: str, branding: dict, output_path: str
     img = Image.alpha_composite(img, overlay)
     draw = ImageDraw.Draw(img)
 
-    try:
-        title_font = ImageFont.truetype("arialbd.ttf", 62)
-        small_font = ImageFont.truetype("arialbd.ttf", 28)
-    except Exception:
-        title_font = small_font = ImageFont.load_default()
+    title_font = get_font(62, bold=True)
+    small_font = get_font(28, bold=True)
 
     # Title (2 lines max)
     words, lines, line = title.upper().split(), [], ""

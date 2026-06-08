@@ -10,6 +10,7 @@ from moviepy.editor import (
 from PIL import Image, ImageDraw, ImageFont
 import numpy as np
 import random
+from core.fonts import get_font
 
 
 W_SHORT, H_SHORT = 1080, 1920  # Vertical 9:16
@@ -38,10 +39,7 @@ def make_shorts_hook_overlay(hook_text: str, duration: float, branding: dict) ->
         pr, pg, pb = _hex_to_rgb(branding["primary_color"])
         draw.rectangle([0, y, W_SHORT, y + 1], fill=(pr, pg, pb, alpha))
 
-    try:
-        font = ImageFont.truetype("arialbd.ttf", 52)
-    except Exception:
-        font = ImageFont.load_default()
+    font = get_font(52, bold=True)
 
     # Word wrap
     words = hook_text.upper().split()
@@ -81,10 +79,7 @@ def make_shorts_caption(text: str, duration: float, branding: dict) -> ImageClip
     ar, ag, ab = _hex_to_rgb(branding["accent_color"])
     draw.rectangle([0, 10, W_SHORT, 15], fill=(ar, ag, ab, 255))
 
-    try:
-        font = ImageFont.truetype("arialbd.ttf", 38)
-    except Exception:
-        font = ImageFont.load_default()
+    font = get_font(38, bold=True)
 
     # Truncate to fit
     display = text[:50] + "..." if len(text) > 50 else text
@@ -105,11 +100,8 @@ def make_subscribe_cta(duration: float, branding: dict) -> ImageClip:
     ar, ag, ab = _hex_to_rgb(branding["accent_color"])
     draw.rounded_rectangle([W_SHORT//2 - 200, 30, W_SHORT//2 + 200, 120],
                             radius=35, fill=(ar, ag, ab, 240))
-    try:
-        font = ImageFont.truetype("arialbd.ttf", 40)
-        small = ImageFont.truetype("arial.ttf", 26)
-    except Exception:
-        font = small = ImageFont.load_default()
+    font = get_font(40, bold=True)
+    small = get_font(26, bold=False)
 
     draw.text((W_SHORT//2 - 95, 48), "SUBSCRIBE", fill=(0, 0, 0, 255), font=font)
     draw.text((W_SHORT//2 - 130, 130), "For more stories!", fill=(255, 255, 255, 200), font=small)

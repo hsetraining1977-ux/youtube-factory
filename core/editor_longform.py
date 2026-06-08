@@ -9,6 +9,7 @@ from moviepy.editor import (
 )
 from PIL import Image, ImageDraw, ImageFont
 import numpy as np
+from core.fonts import get_font
 
 
 def make_branded_scene(
@@ -72,10 +73,7 @@ def _make_text_bar(text: str, duration: float, W: int, H: int, branding: dict) -
     ar, ag, ab = _hex_to_rgb(branding["accent_color"])
     draw.rectangle([0, 5, W, 9], fill=(ar, ag, ab, 255))
 
-    try:
-        font = ImageFont.truetype("arialbd.ttf", 32)
-    except Exception:
-        font = ImageFont.load_default()
+    font = get_font(32, bold=True)
 
     bbox = draw.textbbox((0, 0), text, font=font)
     x = (W - (bbox[2] - bbox[0])) // 2
@@ -91,10 +89,7 @@ def _make_watermark(text: str, duration: float, branding: dict) -> ImageClip:
     draw = ImageDraw.Draw(img)
     pr, pg, pb = _hex_to_rgb(branding["primary_color"])
     draw.rectangle([0, 0, 300, 36], fill=(pr, pg, pb, 160))
-    try:
-        font = ImageFont.truetype("arial.ttf", 16)
-    except Exception:
-        font = ImageFont.load_default()
+    font = get_font(16, bold=False)
     draw.text((10, 10), text, fill=(200, 200, 200, 180), font=font)
     return (ImageClip(np.array(img))
             .set_duration(duration)
