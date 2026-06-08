@@ -151,7 +151,7 @@ def produce_video(channel_id: str, config: dict, topic: str = None,
         print(f"   ✓ Footage: {found}/{len(script.scenes)} scenes")
 
         # ── 4. Long-form video ─────────────────────────────────
-        print("\n🎞️  [4/6] Assembling long-form video (1920×1080)...")
+        print("\n🎞️  [4/6] Assembling long-form video (720p)...")
         assemble_lf = get_longform_editor()
         lf_path = str(work_dir / "video_longform.mp4")
         assemble_lf(
@@ -164,7 +164,7 @@ def produce_video(channel_id: str, config: dict, topic: str = None,
         print(f"   ✓ Long-form: {lf_path}")
 
         # ── 5. Shorts video ────────────────────────────────────
-        print("\n📱 [5/6] Assembling Shorts/TikTok version (1080×1920)...")
+        print("\n📱 [5/6] Assembling Shorts/TikTok version (720×1280 vertical)...")
         assemble_short = get_shorts_editor()
         shorts_path = str(work_dir / "video_shorts.mp4")
         assemble_short(
