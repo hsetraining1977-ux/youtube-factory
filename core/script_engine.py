@@ -244,13 +244,27 @@ def generate_script(niche: str, topic: str, episode_context: dict | None = None)
     else:
         user_content = template["user_template"].format(topic=topic)
 
-    response = client.messages.create(
-        model="claude-haiku-4-5",
-        max_tokens=4000,
-        system=template["system"],
-        messages=[{"role": "user", "content": user_content}]
-    )
-
-    raw_text = response.content[0].text
-    data = json.loads(_extract_json(raw_text))
-    return VideoScript(**data)
+    # Primary path: Structured Outputs (guarantees valid JSON).
+    try:
+        response = client.messages.parse(
+            model="claude-haiku-4-5",
+            max_tokens=8000,
+            system=template["system"],
+            messages=[{"role": "user", "content": user_content}],
+            output_format=VideoScript,
+        )
+        if response.parsed_output is not None:
+            return response.parsed_output
+        # Fallback to manual parse if structured output came back empty
+        raw_text = next((b.text for b in response.content if b.type == "text"), "")
+        return VideoScript(**json.loads(_extract_json(raw_text)))
+    except Exception:
+        # Fallback path: plain request + robust JSON extraction.
+        response = client.messages.create(
+            model="claude-haiku-4-5",
+            max_tokens=8000,
+            system=template["system"],
+            messages=[{"role": "user", "content": user_content}],
+        )
+        raw_text = response.content[0].text
+        return VideoScript(**json.loads(_extract_json(raw_text)))
