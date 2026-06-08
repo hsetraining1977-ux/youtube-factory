@@ -13,7 +13,7 @@ import random
 from core.fonts import get_font
 
 
-W_SHORT, H_SHORT = 1080, 1920  # Vertical 9:16
+W_SHORT, H_SHORT = 720, 1280  # Vertical 9:16 (720p — fast on 1-vCPU, sharp on mobile)
 
 
 def crop_to_vertical(clip: VideoFileClip) -> VideoFileClip:
@@ -172,8 +172,8 @@ def assemble_shorts(
 
     Path(output_path).parent.mkdir(parents=True, exist_ok=True)
     final.write_videofile(
-        output_path, fps=30, codec="libx264", audio_codec="aac",
+        output_path, fps=24, codec="libx264", audio_codec="aac",
         temp_audiofile="temp_short.m4a", remove_temp=True,
-        logger=None, preset="fast"
+        logger=None, preset="ultrafast", threads=2
     )
     return output_path

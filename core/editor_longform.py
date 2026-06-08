@@ -21,7 +21,7 @@ def make_branded_scene(
     total_scenes: int
 ) -> CompositeVideoClip:
     """Create a branded scene with footage + overlays."""
-    W, H = 1920, 1080
+    W, H = 1280, 720  # 720p — optimal for 1-vCPU servers, still HD for YouTube
 
     # Base layer: footage or color background
     if footage_path and Path(footage_path).exists():
@@ -122,8 +122,9 @@ def assemble_longform(scenes, footage_files, audio_path, output_path, branding):
 
     Path(output_path).parent.mkdir(parents=True, exist_ok=True)
     final.write_videofile(
-        output_path, fps=30, codec="libx264", audio_codec="aac",
+        output_path, fps=24, codec="libx264", audio_codec="aac",
         temp_audiofile="temp_lf.m4a", remove_temp=True,
-        logger=None, preset="fast", ffmpeg_params=["-crf", "23"]
+        logger=None, preset="ultrafast", threads=2,
+        ffmpeg_params=["-crf", "26"]
     )
     return output_path
