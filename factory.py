@@ -97,11 +97,20 @@ def save_channel_state(channel_id: str, state: dict):
 # ── Core pipeline ──────────────────────────────────────────────
 
 def produce_video(channel_id: str, config: dict, topic: str = None,
-                  episode_context: dict = None) -> dict:
+                  episode_context: dict = None, force: bool = False) -> dict:
     """
     Full production pipeline for one video.
     Returns dict with paths to long-form and shorts versions.
+
+    force=True bypasses the trading-hours time guard (manual testing only).
     """
+    # ── SAFETY GATE: never run during/near trading market hours ──
+    from core.time_guard import is_safe_to_run
+    allowed, reason = is_safe_to_run()
+    print(reason)
+    if not allowed and not force:
+        return {"channel": channel_id, "status": "blocked_by_time_guard", "reason": reason}
+
     channel = config["channels"][channel_id]
     global_cfg = config["global"]
     niche = channel["niche"]
@@ -234,7 +243,7 @@ def upload_produced_video(result: dict, channel_id: str, config: dict) -> dict:
 
 # ── Channel runners ────────────────────────────────────────────
 
-def run_mystery_history(config: dict, upload: bool = True) -> dict:
+def run_mystery_history(config: dict, upload: bool = True, force: bool = False) -> dict:
     state = load_channel_state("mystery_history")
     topics = load_topics("mystery_history", config)
     unused = [t for t in topics if t not in state["used_topics"]]
@@ -242,7 +251,7 @@ def run_mystery_history(config: dict, upload: bool = True) -> dict:
         unused = topics  # Reset cycle
     topic = random.choice(unused)
 
-    result = produce_video("mystery_history", config, topic=topic)
+    result = produce_video("mystery_history", config, topic=topic, force=force)
 
     if result["status"] == "ready":
         state["used_topics"].append(topic)
@@ -255,7 +264,7 @@ def run_mystery_history(config: dict, upload: bool = True) -> dict:
 
 
 def run_scifi_stories(config: dict, series_id: str = None, episode: int = None,
-                      upload: bool = True) -> dict:
+                      upload: bool = True, force: bool = False) -> dict:
     state = load_channel_state("scifi_stories")
     if not series_id:
         series_id = "echo_station"  # Default to first series
@@ -283,7 +292,7 @@ def run_scifi_stories(config: dict, series_id: str = None, episode: int = None,
         "previous_summary": state["episode_progress"].get(f"{series_id}_summary_ep{current_ep-1}", "")
     }
 
-    result = produce_video("scifi_stories", config, episode_context=episode_context)
+    result = produce_video("scifi_stories", config, episode_context=episode_context, force=force)
 
     if result["status"] == "ready":
         state["episode_progress"][series_id] = current_ep
@@ -295,7 +304,7 @@ def run_scifi_stories(config: dict, series_id: str = None, episode: int = None,
     return result
 
 
-def run_kids_education(config: dict, upload: bool = True) -> dict:
+def run_kids_education(config: dict, upload: bool = True, force: bool = False) -> dict:
     state = load_channel_state("kids_education")
     topics = load_topics("kids_education", config)
     unused = [t for t in topics if t not in state["used_topics"]]
@@ -303,7 +312,7 @@ def run_kids_education(config: dict, upload: bool = True) -> dict:
         unused = topics
     topic = random.choice(unused)
 
-    result = produce_video("kids_education", config, topic=topic)
+    result = produce_video("kids_education", config, topic=topic, force=force)
 
     if result["status"] == "ready":
         state["used_topics"].append(topic)
@@ -315,7 +324,7 @@ def run_kids_education(config: dict, upload: bool = True) -> dict:
     return result
 
 
-def run_diy_tutorials(config: dict, upload: bool = True) -> dict:
+def run_diy_tutorials(config: dict, upload: bool = True, force: bool = False) -> dict:
     state = load_channel_state("diy_tutorials")
     topics = load_topics("diy_tutorials", config)
     unused = [t for t in topics if t not in state["used_topics"]]
@@ -323,7 +332,7 @@ def run_diy_tutorials(config: dict, upload: bool = True) -> dict:
         unused = topics
     topic = random.choice(unused)
 
-    result = produce_video("diy_tutorials", config, topic=topic)
+    result = produce_video("diy_tutorials", config, topic=topic, force=force)
 
     if result["status"] == "ready":
         state["used_topics"].append(topic)
@@ -385,21 +394,24 @@ if __name__ == "__main__":
     parser.add_argument("--no-upload", action="store_true", help="Produce only, don't upload")
     parser.add_argument("--schedule", action="store_true", help="Run on schedule")
     parser.add_argument("--dry-run", action="store_true", help="Script only (no video)")
+    parser.add_argument("--force", action="store_true",
+                        help="Bypass trading-hours time guard (manual testing only)")
 
     args = parser.parse_args()
     config = load_config()
     upload = not args.no_upload
+    force = args.force
 
     if args.schedule:
         run_scheduled_factory()
     elif args.channel == "all":
         print("🚀 Running all channels...")
         for ch in ["mystery_history", "kids_education", "diy_tutorials"]:
-            CHANNEL_RUNNERS[ch](config, upload=upload)
-        run_scifi_stories(config, upload=upload)
+            CHANNEL_RUNNERS[ch](config, upload=upload, force=force)
+        run_scifi_stories(config, upload=upload, force=force)
     elif args.channel == "scifi_stories":
-        run_scifi_stories(config, series_id=args.series, episode=args.episode, upload=upload)
+        run_scifi_stories(config, series_id=args.series, episode=args.episode, upload=upload, force=force)
     elif args.channel in CHANNEL_RUNNERS:
-        CHANNEL_RUNNERS[args.channel](config, upload=upload)
+        CHANNEL_RUNNERS[args.channel](config, upload=upload, force=force)
     else:
         parser.print_help()
