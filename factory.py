@@ -150,30 +150,29 @@ def produce_video(channel_id: str, config: dict, topic: str = None,
         found = sum(1 for f in footage_files if f)
         print(f"   ✓ Footage: {found}/{len(script.scenes)} scenes")
 
-        # ── 4. Long-form video ─────────────────────────────────
-        print("\n🎞️  [4/6] Assembling long-form video (720p)...")
-        assemble_lf = get_longform_editor()
+        # ── 4. Long-form video (FFmpeg-native) ─────────────────
+        print("\n🎞️  [4/6] Rendering long-form video (FFmpeg, 720p)...")
+        from core.ffmpeg_renderer import render_longform, render_shorts
         lf_path = str(work_dir / "video_longform.mp4")
-        assemble_lf(
-            [s.model_dump() for s in script.scenes],
+        render_longform(
+            script.scenes,
             footage_files,
             narration_path,
             lf_path,
-            branding
+            branding,
         )
         print(f"   ✓ Long-form: {lf_path}")
 
-        # ── 5. Shorts video ────────────────────────────────────
-        print("\n📱 [5/6] Assembling Shorts/TikTok version (720×1280 vertical)...")
-        assemble_short = get_shorts_editor()
+        # ── 5. Shorts video (FFmpeg-native) ────────────────────
+        print("\n📱 [5/6] Rendering Shorts/TikTok version (FFmpeg, 720×1280)...")
         shorts_path = str(work_dir / "video_shorts.mp4")
-        assemble_short(
+        render_shorts(
             script.shorts_hook,
             script.shorts_summary,
             footage_files,
-            narration_path,
             shorts_path,
-            branding
+            branding,
+            voice_config,
         )
         print(f"   ✓ Shorts: {shorts_path}")
 
