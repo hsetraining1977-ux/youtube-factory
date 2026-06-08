@@ -203,6 +203,27 @@ Requirements: 6-9 scenes, 8-15 min. Include: tools list scene, safety warnings, 
 }
 
 
+def _extract_json(text: str) -> str:
+    """Extract clean JSON from Claude's response (handles markdown fences/preamble)."""
+    text = text.strip()
+    # Remove markdown code fences
+    if "```" in text:
+        parts = text.split("```")
+        for part in parts:
+            p = part.strip()
+            if p.startswith("json"):
+                p = p[4:].strip()
+            if p.startswith("{"):
+                text = p
+                break
+    # Extract from first { to last }
+    start = text.find("{")
+    end = text.rfind("}")
+    if start != -1 and end != -1:
+        text = text[start:end + 1]
+    return text
+
+
 def generate_script(niche: str, topic: str, episode_context: dict | None = None) -> VideoScript:
     """Generate a complete video script for the given channel niche."""
     template = PROMPTS[niche]
@@ -230,5 +251,6 @@ def generate_script(niche: str, topic: str, episode_context: dict | None = None)
         messages=[{"role": "user", "content": user_content}]
     )
 
-    data = json.loads(response.content[0].text)
+    raw_text = response.content[0].text
+    data = json.loads(_extract_json(raw_text))
     return VideoScript(**data)
