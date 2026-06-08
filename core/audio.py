@@ -31,9 +31,12 @@ def generate_audio(text: str, output_path: str, voice_config: dict) -> str:
 
 
 def generate_full_narration(scenes: list, output_dir: str, voice_config: dict) -> str:
-    """Generate audio per scene, combine into one file."""
+    """Generate audio per scene, then combine into one file using moviepy."""
     from moviepy.editor import AudioFileClip, concatenate_audioclips
-    import numpy as np
+    from pathlib import Path
+    import os
+
+    Path(output_dir).mkdir(parents=True, exist_ok=True)
 
     scene_files = []
     for i, scene in enumerate(scenes):
@@ -42,23 +45,21 @@ def generate_full_narration(scenes: list, output_dir: str, voice_config: dict) -
         generate_audio(text, path, voice_config)
         scene_files.append(path)
 
-    # Combine with 0.8s pause between scenes
-    clips = []
-    for f in scene_files:
-        clips.append(AudioFileClip(f))
-        clips.append(AudioFileClip(f).set_duration(0.8).volumex(0))  # silence hack
+    # Combine all scene audios into one continuous narration track.
+    clips = [AudioFileClip(f) for f in scene_files]
+    combined = concatenate_audioclips(clips)
 
-    # Use ffmpeg concat instead (more reliable)
-    combined_path = f"{output_dir}/narration_full.mp3"
-    list_file = f"{output_dir}/concat_list.txt"
-    with open(list_file, "w") as lf:
-        for f in scene_files:
-            lf.write(f"file '{f}'\n")
+    combined_path = os.path.abspath(f"{output_dir}/narration_full.mp3")
+    combined.write_audiofile(combined_path, fps=44100, logger=None)
 
-    import subprocess
-    subprocess.run([
-        "ffmpeg", "-y", "-f", "concat", "-safe", "0",
-        "-i", list_file, "-c", "copy", combined_path
-    ], capture_output=True)
+    # Clean up
+    for c in clips:
+        try:
+            c.close()
+        except Exception:
+            pass
+
+    if not Path(combined_path).exists():
+        raise RuntimeError(f"Failed to create combined narration: {combined_path}")
 
     return combined_path
