@@ -57,9 +57,15 @@ def fetch_clip(query: str, path: str, min_dur: int = 10) -> str | None:
     if not videos:
         return None
     video = random.choice(videos[:5])
-    files = sorted(video.get("video_files", []), key=lambda x: x.get("width", 0), reverse=True)
-    target = next((f for f in files if f.get("width", 0) <= 1920), files[-1] if files else None)
-    if not target:
+    files = video.get("video_files", [])
+    # Pick the SMALLEST clip that's still wide enough for 720p output (>=854px).
+    # Smaller source = far faster FFmpeg decode on a 1-vCPU server.
+    big_enough = [f for f in files if f.get("width", 0) >= 854]
+    if big_enough:
+        target = min(big_enough, key=lambda x: x.get("width", 99999))
+    elif files:
+        target = max(files, key=lambda x: x.get("width", 0))  # best available if all small
+    else:
         return None
     Path(path).parent.mkdir(parents=True, exist_ok=True)
     resp = httpx.get(target["link"], timeout=120, follow_redirects=True)
